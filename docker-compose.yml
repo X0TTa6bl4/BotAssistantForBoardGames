@@ -5,6 +5,7 @@ networks:
 services:
   site:
     image: nginx:stable-alpine
+    container_name: site
     ports:
       - "8080:80"
     volumes:
@@ -18,6 +19,7 @@ services:
   mysql:
     platform: linux/x86_64
     image: mysql:5.7
+    container_name: db
     restart: unless-stopped
     tty: true
     ports:
@@ -38,6 +40,7 @@ services:
   php:
     build:
       context: docker/php
+    container_name: php
     volumes:
       - .:/www
       - ./docker/php/supervisor:/etc/supervisor/custom.d/
