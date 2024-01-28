@@ -15,7 +15,6 @@ class CreateEntityTable extends Migration
     {
         Schema::create('entities', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->integer('health_points');
             $table->integer('health_points_max');
             $table->integer('power');
@@ -23,6 +22,7 @@ class CreateEntityTable extends Migration
             $table->integer('speed');
             $table->integer('lvl');
             $table->integer('protection');
+            $table->integer('user_id')->index()->unsigned()->default(1);
             $table->timestamps();
         });
     }
@@ -34,6 +34,6 @@ class CreateEntityTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('players');
+        Schema::dropIfExists('entities');
     }
 }

@@ -1,5 +1,5 @@
 CREATE DATABASE IF NOT EXISTS `bot_assistant`;
 CREATE DATABASE IF NOT EXISTS `bot_assistant_test`;
 
-GRANT ALL PRIVILEGES ON *.* TO 'exam_api'@'%';
+GRANT ALL PRIVILEGES ON *.* TO 'bot'@'%';
 FLUSH PRIVILEGES;

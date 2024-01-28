@@ -3,12 +3,12 @@
 namespace src\EntityCard\Infrastructure\Provider;
 
 use Illuminate\Support\ServiceProvider;
-use src\EntityCard\Domain\Repository\EntityRepositoryContract;
-use src\EntityCard\Infrastructure\Repository\EntityRepository;
+use src\EntityCard\Domain\Repository\EntityCardRepositoryContract;
+use src\EntityCard\Infrastructure\Repository\EntityCardRepository;
 
 class RepositoryServiceProvide extends ServiceProvider
 {
     public array $bindings = [
-        EntityRepositoryContract::class => EntityRepository::class,
+        EntityCardRepositoryContract::class => EntityCardRepository::class,
     ];
 }

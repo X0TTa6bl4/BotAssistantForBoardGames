@@ -9,17 +9,16 @@ use src\EntityCard\Domain\Entity\ValueObject\HealthPointsValueObject;
 use src\EntityCard\Domain\Entity\ValueObject\IdValueObject;
 use src\EntityCard\Domain\Entity\ValueObject\InitiativeValueObject;
 use src\EntityCard\Domain\Entity\ValueObject\LvlValueObject;
-use src\EntityCard\Domain\Entity\ValueObject\NameValueObject;
 use src\EntityCard\Domain\Entity\ValueObject\PowerValueObject;
 use src\EntityCard\Domain\Entity\ValueObject\ProtectionValueObject;
 use src\EntityCard\Domain\Entity\ValueObject\SpeedValueObject;
 use src\EntityCard\Domain\Rule\MakeDamageEntityRuleContract;
 use src\EntityCard\Domain\Rule\TakeDamageEntityRuleContract;
 
-class Entity
+class EntityCard
 {
     private ?IdValueObject $id;
-    private NameValueObject $name;
+    private IdValueObject $userId;
     private HealthPointsValueObject $healthPoints;
     private PowerValueObject $power;
     private InitiativeValueObject $initiative;
@@ -28,10 +27,9 @@ class Entity
     private ProtectionValueObject $protection;
 
     public function __construct(
-        ?IdValueObject           $id,
-        NameValueObject         $name,
+        ?IdValueObject          $id,
+        IdValueObject           $userId,
         HealthPointsValueObject $healthPoints,
-
         PowerValueObject        $power,
         InitiativeValueObject   $initiative,
         SpeedValueObject        $speed,
@@ -40,7 +38,7 @@ class Entity
     )
     {
         $this->id = $id;
-        $this->name = $name;
+        $this->userId = $userId;
         $this->healthPoints = $healthPoints;
         $this->power = $power;
         $this->initiative = $initiative;
@@ -54,9 +52,9 @@ class Entity
         return $this->id;
     }
 
-    public function getName(): NameValueObject
+    public function getUserId(): IdValueObject
     {
-        return $this->name;
+        return $this->userId;
     }
 
     public function getHealthPoints(): HealthPointsValueObject
@@ -87,11 +85,6 @@ class Entity
     public function getProtection(): ProtectionValueObject
     {
         return $this->protection;
-    }
-
-    public function updateName(NameValueObject $name): void
-    {
-        $this->name = $name;
     }
 
     public function updateHealthPoints(HealthPointsValueObject $healthPoints): void

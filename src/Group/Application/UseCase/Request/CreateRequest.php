@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace src\EntityCard\Application\UseCase\Request;
+namespace src\Group\Application\UseCase\Request;
 
-class UpdateNameRequest
+class CreateRequest
 {
     public function __construct(
-        public readonly int $userId,
         public readonly string $name,
+        public readonly int    $ownerId
     )
     {
     }

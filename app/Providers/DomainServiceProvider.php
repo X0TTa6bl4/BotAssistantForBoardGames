@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use src\EntityCard\Infrastructure\Provider\EntityCardServiceProvide;
+use src\Group\Infrastracture\Provider\GroupServiceProvide;
 
 class DomainServiceProvider extends ServiceProvider
 {
@@ -15,6 +16,7 @@ class DomainServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(EntityCardServiceProvide::class);
+        $this->app->register(GroupServiceProvide::class);
     }
 
     /**
