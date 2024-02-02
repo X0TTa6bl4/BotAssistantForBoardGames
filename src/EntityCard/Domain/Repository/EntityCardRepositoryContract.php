@@ -12,6 +12,8 @@ interface EntityCardRepositoryContract
 
     public function update(EntityCard $entity): bool;
 
+    public function upsert(array $entities): int;
+
     public function getById(int $id): EntityCard;
 
     public function getByUserId(int $userId): array;

@@ -21,14 +21,15 @@ class EntityCardRepository implements EntityCardRepositoryContract
     {
         /** @var EntityEloquentModel $EntitiesEloquentModel */
         $EntitiesEloquentModel = EntityEloquentModel::query()->create([
-            'user_id' => $player->getUserId()->getValue(),
-            'health_points' => $player->getHealthPoints()->getValue(),
-            'health_points_max' => $player->getHealthPoints()->getMaxHealthPoints(),
-            'power' => $player->getPower()->getValue(),
-            'initiative' => $player->getInitiative()->getValue(),
-            'speed' => $player->getSpeed()->getValue(),
-            'lvl' => $player->getLvl()->getValue(),
-            'protection' => $player->getProtection()->getValue(),
+            'user_id' => $player->getUserId(),
+            'name' => $player->getName(),
+            'health_points' => $player->getHealthPoints(),
+            'health_points_max' => $player->getHealthPoints(),
+            'power' => $player->getPower(),
+            'initiative' => $player->getInitiative(),
+            'intelligence' => $player->getIntelligence(),
+            'lvl' => $player->getLvl(),
+            'protection' => $player->getProtection(),
         ]);
 
         return $this->entityBuilder->fromEloquentModel($EntitiesEloquentModel);
@@ -36,17 +37,52 @@ class EntityCardRepository implements EntityCardRepositoryContract
 
     public function update(EntityCard $entity): bool
     {
-        $EntitiesEloquentModel = EntityEloquentModel::query()->find($entity->getId()->getValue())->update([
-            'health_points' => $entity->getHealthPoints()->getValue(),
-            'health_points_max' => $entity->getHealthPoints()->getMaxHealthPoints(),
-            'power' => $entity->getPower()->getValue(),
-            'initiative' => $entity->getInitiative()->getValue(),
-            'speed' => $entity->getSpeed()->getValue(),
-            'lvl' => $entity->getLvl()->getValue(),
-            'protection' => $entity->getProtection()->getValue(),
+        $EntitiesEloquentModel = EntityEloquentModel::query()->find($entity->getId())->update([
+            'name' => $entity->getName(),
+            'health_points' => $entity->getHealthPoints(),
+            'health_points_max' => $entity->getMaxHealthPoints(),
+            'power' => $entity->getPower(),
+            'initiative' => $entity->getInitiative(),
+            'intelligence' => $entity->getIntelligence(),
+            'lvl' => $entity->getLvl(),
+            'protection' => $entity->getProtection(),
         ]);
 
         return $EntitiesEloquentModel;
+    }
+
+    public function upsert(array $entities): int
+    {
+        return EntityEloquentModel::query()->upsert(
+            array_map(
+                function (EntityCard $entity) {
+                    return [
+                        'id' => $entity->getId(),
+                        'user_id' => $entity->getUserId(),
+                        'name' => $entity->getName(),
+                        'health_points' => $entity->getHealthPoints(),
+                        'health_points_max' => $entity->getMaxHealthPoints(),
+                        'power' => $entity->getPower(),
+                        'initiative' => $entity->getInitiative(),
+                        'intelligence' => $entity->getIntelligence(),
+                        'lvl' => $entity->getLvl(),
+                        'protection' => $entity->getProtection(),
+                    ];
+                },
+                $entities
+            ),
+            ['id'],
+            [
+                'name',
+                'health_points',
+                'health_points_max',
+                'power',
+                'initiative',
+                'intelligence',
+                'lvl',
+                'protection',
+            ]
+        );
     }
 
     public function getById(int $id): EntityCard

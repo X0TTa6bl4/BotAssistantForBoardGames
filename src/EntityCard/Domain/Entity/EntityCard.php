@@ -8,83 +8,105 @@ use src\EntityCard\Domain\Entity\ValueObject\DamageValueObject;
 use src\EntityCard\Domain\Entity\ValueObject\HealthPointsValueObject;
 use src\EntityCard\Domain\Entity\ValueObject\IdValueObject;
 use src\EntityCard\Domain\Entity\ValueObject\InitiativeValueObject;
+use src\EntityCard\Domain\Entity\ValueObject\IntelligenceValueObject;
 use src\EntityCard\Domain\Entity\ValueObject\LvlValueObject;
+use src\EntityCard\Domain\Entity\ValueObject\NameValueObject;
 use src\EntityCard\Domain\Entity\ValueObject\PowerValueObject;
 use src\EntityCard\Domain\Entity\ValueObject\ProtectionValueObject;
-use src\EntityCard\Domain\Entity\ValueObject\SpeedValueObject;
+use src\EntityCard\Domain\Entity\ValueObject\RestoreHealthValueObject;
 use src\EntityCard\Domain\Rule\MakeDamageEntityRuleContract;
+use src\EntityCard\Domain\Rule\MakeRestoreHealthRuleContract;
 use src\EntityCard\Domain\Rule\TakeDamageEntityRuleContract;
+use src\EntityCard\Domain\Rule\TakeRestoreHealthRuleContract;
 
 class EntityCard
 {
     private ?IdValueObject $id;
     private IdValueObject $userId;
+    private NameValueObject $name;
     private HealthPointsValueObject $healthPoints;
     private PowerValueObject $power;
     private InitiativeValueObject $initiative;
-    private SpeedValueObject $speed;
+    private IntelligenceValueObject $intelligence;
     private LvlValueObject $lvl;
     private ProtectionValueObject $protection;
 
     public function __construct(
         ?IdValueObject          $id,
+        NameValueObject         $name,
         IdValueObject           $userId,
         HealthPointsValueObject $healthPoints,
         PowerValueObject        $power,
         InitiativeValueObject   $initiative,
-        SpeedValueObject        $speed,
+        IntelligenceValueObject $intelligence,
         LvlValueObject          $lvl,
         ProtectionValueObject   $protection
     )
     {
         $this->id = $id;
+        $this->name = $name;
         $this->userId = $userId;
         $this->healthPoints = $healthPoints;
         $this->power = $power;
         $this->initiative = $initiative;
-        $this->speed = $speed;
+        $this->intelligence = $intelligence;
         $this->lvl = $lvl;
         $this->protection = $protection;
     }
 
-    public function getId(): ?IdValueObject
+    public function getId(): ?int
     {
-        return $this->id;
+        return $this?->id?->getValue();
     }
 
-    public function getUserId(): IdValueObject
+    public function getUserId(): int
     {
-        return $this->userId;
+        return $this->userId->getValue();
     }
 
-    public function getHealthPoints(): HealthPointsValueObject
+    public function getName(): string
     {
-        return $this->healthPoints;
+        return $this->name->getValue();
     }
 
-    public function getPower(): PowerValueObject
+    public function getHealthPoints(): int
     {
-        return $this->power;
+        return $this->healthPoints->getValue();
     }
 
-    public function getInitiative(): InitiativeValueObject
+    public function getMaxHealthPoints(): int
     {
-        return $this->initiative;
+        return $this->healthPoints->getMaxHealthPoints();
     }
 
-    public function getSpeed(): SpeedValueObject
+    public function getPower(): int
     {
-        return $this->speed;
+        return $this->power->getValue();
     }
 
-    public function getLvl(): LvlValueObject
+    public function getInitiative(): int
     {
-        return $this->lvl;
+        return $this->initiative->getValue();
     }
 
-    public function getProtection(): ProtectionValueObject
+    public function getIntelligence(): int
     {
-        return $this->protection;
+        return $this->intelligence->getValue();
+    }
+
+    public function getLvl(): int
+    {
+        return $this->lvl->getValue();
+    }
+
+    public function getProtection(): int
+    {
+        return $this->protection->getValue();
+    }
+
+    public function rename(NameValueObject $nameValueObject): void
+    {
+        $this->name = $nameValueObject;
     }
 
     public function updateHealthPoints(HealthPointsValueObject $healthPoints): void
@@ -102,9 +124,9 @@ class EntityCard
         $this->initiative = $initiative;
     }
 
-    public function updateSpeed(SpeedValueObject $speed): void
+    public function updateSpeed(IntelligenceValueObject $speed): void
     {
-        $this->speed = $speed;
+        $this->intelligence = $speed;
     }
 
     public function updateLvl(LvlValueObject $lvl): void
@@ -129,6 +151,21 @@ class EntityCard
     {
         /** @var MakeDamageEntityRuleContract $rule */
         $rule = app(MakeDamageEntityRuleContract::class);
+
+        return $rule($this);
+    }
+
+    public function takeRestoreHealth(RestoreHealthValueObject $restoreHealth)
+    {
+        /** @var TakeRestoreHealthRuleContract $rule */
+        $rule = app(TakeRestoreHealthRuleContract::class);
+
+        return $rule($this, $restoreHealth);
+    }
+
+    public function makeRestoreHealth(): RestoreHealthValueObject
+    {
+        $rule = app(MakeRestoreHealthRuleContract::class);
 
         return $rule($this);
     }

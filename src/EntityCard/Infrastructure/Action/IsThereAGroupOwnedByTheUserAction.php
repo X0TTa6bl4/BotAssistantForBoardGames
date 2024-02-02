@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace src\EntityCard\Infrastructure\Action;
 
 use src\EntityCard\Application\Action\IsThereAGroupOwnedByTheUserContract;
-use src\Group\Application\UseCase\GetGroupByOwnerIdUseCase;
+use src\EntityCard\Application\UseCase\Group\GetGroupByOwnerIdUseCase;
 
 class IsThereAGroupOwnedByTheUserAction implements IsThereAGroupOwnedByTheUserContract
 {

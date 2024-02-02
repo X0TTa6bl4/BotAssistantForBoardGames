@@ -20,7 +20,7 @@ class EntityFactory extends Factory
             'health_points_max' => $maxHealthPoints,
             'power' => $this->faker->numberBetween(1, 10),
             'initiative' => $this->faker->numberBetween(1, 10),
-            'speed' => $this->faker->numberBetween(1, 10),
+            'intelligence' => $this->faker->numberBetween(1, 10),
             'lvl' => $this->faker->numberBetween(1, 5),
             'protection' => $this->faker->numberBetween(1, 10),
         ];

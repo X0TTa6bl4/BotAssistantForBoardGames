@@ -4,22 +4,16 @@ declare(strict_types=1);
 
 namespace src\EntityCard\Application\Rule;
 
-use src\EntityCard\Application\Action\IsThereAGroupOwnedByTheUserContract;
-use src\EntityCard\Domain\Repository\EntityCardRepositoryContract;
+use src\EntityCard\Domain\Entity\Group;
 use src\EntityCard\Domain\Rule\IsItPossibleToCreateAnEntityRuleContract;
 
 class IsItPossibleToCreateAnEntityRule implements IsItPossibleToCreateAnEntityRuleContract
 {
-    public function __construct(
-        private readonly EntityCardRepositoryContract        $entityCardRepository,
-        private readonly IsThereAGroupOwnedByTheUserContract $isThereAGroupOwnedByTheUser
-    )
+    /**
+     * @throws \Exception
+     */
+    public function __invoke(Group $group, int $userId): bool
     {
-    }
-
-    public function __invoke(int $userId): bool
-    {
-        return ($this->isThereAGroupOwnedByTheUser)($userId)
-            || count($this->entityCardRepository->getByUserId($userId)) === 0;
+        return $group->getOwnerId() === $userId || count($group->findUserById($userId)?->getEntities()) === 0;
     }
 }
