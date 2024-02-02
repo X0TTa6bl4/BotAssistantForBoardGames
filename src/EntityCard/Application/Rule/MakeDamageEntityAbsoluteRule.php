@@ -13,6 +13,6 @@ class MakeDamageEntityAbsoluteRule implements MakeDamageEntityRuleContract
 
     public function __invoke(EntityCard $player): DamageValueObject
     {
-        return new DamageValueObject($player->getPower()->getValue() + $player->getLvl()->getValue());
+        return new DamageValueObject($player->getPower() + $player->getLvl());
     }
 }

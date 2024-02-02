@@ -9,5 +9,5 @@ use src\EntityCard\Domain\Entity\ValueObject\DamageValueObject;
 
 interface TakeDamageEntityRuleContract
 {
-    public function __invoke(EntityCard $player, DamageValueObject $damage): void;
+    public function __invoke(EntityCard $entityCard, DamageValueObject $damage): void;
 }

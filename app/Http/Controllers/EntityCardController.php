@@ -3,18 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use src\EntityCard\Application\UseCase\CreateUseCase;
-use src\EntityCard\Application\UseCase\MakeDamageUseCase;
-use src\EntityCard\Application\UseCase\Request\CreateRequest;
-use src\EntityCard\Application\UseCase\Request\MakeDamageRequest;
+use src\EntityCard\Application\UseCase\EntityCard\EntityCreateUseCase;
+use src\EntityCard\Application\UseCase\EntityCard\MakeDamageUseCase;
+use src\EntityCard\Application\UseCase\EntityCard\Request\CreateRequest;
+use src\EntityCard\Application\UseCase\EntityCard\Request\MakeDamageRequest;
+use src\EntityCard\Application\UseCase\EntityCard\Request\RestoreHealthRequest;
+use src\EntityCard\Application\UseCase\EntityCard\RestoreHealthUseCase;
 
 class EntityCardController extends Controller
 {
-    public function create(Request $request, CreateUseCase $createUseCase): void
+    public function create(Request $request, EntityCreateUseCase $createUseCase): void
     {
         $createUseCase(
             new CreateRequest(
                 userId: $request->input('user_id'),
+                name: $request->input('name'),
                 healthPoints: $request->input('health_points'),
                 power: $request->input('power'),
                 initiative: $request->input('initiative'),
@@ -25,12 +28,27 @@ class EntityCardController extends Controller
         );
     }
 
+    /**
+     * @throws \Exception
+     */
     public function makeDamage(Request $request, MakeDamageUseCase $makeDamageUseCase): void
     {
-        $makeDamageUseCase(
+        $group = $makeDamageUseCase(
             new MakeDamageRequest(
+                userId: $request->input('user_id'),
                 entityIdThatDealsDamage: $request->input('entityIdThatDealsDamage'),
                 entityIdThatTakesDamage: $request->input('entityIdThatTakesDamage')
+            )
+        );
+    }
+
+    public function restoreHealth(Request $request, RestoreHealthUseCase $restoreHealthUseCase)
+    {
+        $group = $restoreHealthUseCase(
+            new RestoreHealthRequest(
+                userId: $request->input('user_id'),
+                entityIdThatDealsHealth: $request->input('entityIdThatDealsHealth'),
+                entityIdThatTakesHealth: $request->input('entityIdThatTakesHealth')
             )
         );
     }

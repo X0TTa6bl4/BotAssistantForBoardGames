@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class EntityCardControllerTest extends TestCase
+class EntityCardControllerTest extends FeatureCase
 {
     use RefreshDatabase;
 

@@ -2,25 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\GroupResource;
 use App\Models\Group;
 use App\Models\User;
 use Illuminate\Http\Request;
-use src\Group\Application\UseCase\CreateUseCase;
-use src\Group\Application\UseCase\RenameUseCase;
-use src\Group\Application\UseCase\Request\CreateRequest;
-use src\Group\Application\UseCase\Request\RenameRequest;
+use src\EntityCard\Application\UseCase\Group\CreateUseCase;
+use src\EntityCard\Application\UseCase\Group\GetGroupByOwnerIdUseCase;
+use src\EntityCard\Application\UseCase\Group\RenameUseCase;
+use src\EntityCard\Application\UseCase\Group\Request\CreateRequest;
+use src\EntityCard\Application\UseCase\Group\Request\RenameRequest;
 
 class GroupController extends Controller
 {
-    public function create(Request $request, CreateUseCase $createUseCase): void
+    public function create(Request $request, CreateUseCase $createUseCase)
     {
         $user = User::query()->find($request->input('owner_id'));
-        $createUseCase(
+        $group = $createUseCase(
             new CreateRequest(
                 name: $request->input('name'),
                 ownerId: $user->id
             )
         );
+
+        return response()->json([
+            'id' => $group->getId(),
+            'name' => $group->getName(),
+            'owner_id' => $group->getOwnerId(),
+            'public_id' => $group->getPublicId(),
+        ]);
     }
 
     public function rename(Request $request, RenameUseCase $renameUseCase): void
@@ -62,6 +71,13 @@ class GroupController extends Controller
                     $query->select('id', 'user_id', 'power', 'lvl', 'health_points', 'protection');
                 },
             ])->first()->toArray();
+    }
+
+    public function getGroup(Request $request, GetGroupByOwnerIdUseCase $getGroupByOwnerIdUseCase)
+    {
+        $group = $getGroupByOwnerIdUseCase($request->input('owner_id'));
+
+        return new GroupResource($group);
     }
 
 }
