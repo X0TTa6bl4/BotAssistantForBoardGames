@@ -15,6 +15,9 @@ class CreateBattlesTable extends Migration
     {
         Schema::create('battles', function (Blueprint $table) {
             $table->id();
+            $table->integer('entity_id_make_a_move')->index()->unsigned();
+            $table->integer('group_id')->index()->unsigned();
+            $table->json('entities_in_combat');
             $table->timestamps();
         });
     }

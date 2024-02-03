@@ -9,18 +9,19 @@ use Illuminate\Support\Collection;
 class Battle
 {
     private ?int $id;
+    private int $groupId;
     private ?int $entityIdMakeAMove;
-    private ?Collection $entitiesInCombat;
+    private Collection $entitiesInCombat;
 
-    public function __construct(?int $id, int $entityIdMakeAMove, Collection $entitiesInCombat)
+    public function __construct(?int $id, int $groupId, array $entitiesInCombat, int $entityIdMakeAMove = null)
     {
         $this->id = $id;
-
-        //TODO - добавлять первое существо из коллекции
-        $this->entityIdMakeAMove = $entityIdMakeAMove;
-        $this->entitiesInCombat = $entitiesInCombat
+        $this->groupId = $groupId;
+        $this->entitiesInCombat = collect($entitiesInCombat)
             ->sortByDesc(fn(Entity $entity) => $entity->getInitiative())
             ->values();
+
+        $this->entityIdMakeAMove = $entityIdMakeAMove ?? $this->entitiesInCombat->first()->getId();
     }
 
     public function getId(): ?int
@@ -28,12 +29,17 @@ class Battle
         return $this->id;
     }
 
+    public function getGroupId(): int
+    {
+        return $this->groupId;
+    }
+
     public function getEntityIdMakeAMove(): ?int
     {
         return $this->entityIdMakeAMove;
     }
 
-    public function getEntitiesInCombat(): ?Collection
+    public function getEntitiesInCombat(): Collection
     {
         return $this->entitiesInCombat;
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\EntityCard;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use src\EntityCard\Domain\Entity\EntityCard;

@@ -27,3 +27,7 @@ Route::post('v1/group/rename', [\App\Http\Controllers\GroupController::class, 'r
 Route::post('v1/group/add-user', [\App\Http\Controllers\GroupController::class, 'addUser']);
 Route::post('v1/group/all-users', [\App\Http\Controllers\GroupController::class, 'getAllUsers']);
 Route::post('v1/group/get', [\App\Http\Controllers\GroupController::class, 'getGroup']);
+
+Route::post('v1/battle/create', [\App\Http\Controllers\BattleController::class, 'create']);
+Route::post('v1/battle/get', [\App\Http\Controllers\BattleController::class, 'getById']);
+Route::post('v1/battle/complete-a-move', [\App\Http\Controllers\BattleController::class, 'completeAMove']);

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\GroupResource;
+use App\Http\Resources\EntityCard\GroupResource;
 use App\Models\Group;
 use App\Models\User;
 use Illuminate\Http\Request;

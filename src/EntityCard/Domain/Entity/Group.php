@@ -105,4 +105,15 @@ class Group
         throw new \Exception('Entity not found');
     }
 
+    public function getAllEntities(): array
+    {
+        $entities = [];
+        foreach ($this->users as $user) {
+            foreach ($user->getEntities() as $entity) {
+                $entities[] = $entity;
+            }
+        }
+
+        return array_merge($entities, $this->owner->getEntities());
+    }
 }
