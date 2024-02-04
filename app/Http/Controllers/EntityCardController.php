@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use src\EntityCard\Application\UseCase\EntityCard\EntityCreateUseCase;
+use src\EntityCard\Application\UseCase\EntityCard\CreateUseCase;
 use src\EntityCard\Application\UseCase\EntityCard\MakeDamageUseCase;
 use src\EntityCard\Application\UseCase\EntityCard\Request\CreateRequest;
 use src\EntityCard\Application\UseCase\EntityCard\Request\MakeDamageRequest;
@@ -12,7 +12,7 @@ use src\EntityCard\Application\UseCase\EntityCard\RestoreHealthUseCase;
 
 class EntityCardController extends Controller
 {
-    public function create(Request $request, EntityCreateUseCase $createUseCase): void
+    public function create(Request $request, CreateUseCase $createUseCase): void
     {
         $createUseCase(
             new CreateRequest(
@@ -21,7 +21,7 @@ class EntityCardController extends Controller
                 healthPoints: $request->input('health_points'),
                 power: $request->input('power'),
                 initiative: $request->input('initiative'),
-                speed: $request->input('speed'),
+                intelligence: $request->input('speed'),
                 lvl: $request->input('lvl'),
                 protection: $request->input('protection'),
             )

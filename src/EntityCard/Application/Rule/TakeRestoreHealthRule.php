@@ -12,15 +12,17 @@ use src\EntityCard\Domain\Rule\TakeRestoreHealthRuleContract;
 class TakeRestoreHealthRule implements TakeRestoreHealthRuleContract
 {
 
-    public function __invoke(EntityCard $entityCard, RestoreHealthValueObject $restoreHealth): void
+    public function __invoke(EntityCard $entityCard, RestoreHealthValueObject $restoreHealth): int
     {
         $restoreHealth = $restoreHealth->getValue();
 
-        $entityCard->updateHealthPoints(
+        $entityCard->setHealthPoints(
             new HealthPointsValueObject(
-                $entityCard->getHealthPoints() + $restoreHealth,
+                min($entityCard->getHealthPoints() + $restoreHealth, $entityCard->getMaxHealthPoints()),
                 $entityCard->getMaxHealthPoints()
             )
         );
+
+        return $restoreHealth;
     }
 }

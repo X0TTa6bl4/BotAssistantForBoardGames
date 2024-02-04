@@ -109,7 +109,7 @@ class EntityCard
         $this->name = $nameValueObject;
     }
 
-    public function updateHealthPoints(HealthPointsValueObject $healthPoints): void
+    public function setHealthPoints(HealthPointsValueObject $healthPoints): void
     {
         $this->healthPoints = $healthPoints;
     }
@@ -139,12 +139,12 @@ class EntityCard
         $this->protection = $protection;
     }
 
-    public function takeDamage(DamageValueObject $damage): void
+    public function takeDamage(DamageValueObject $damage): int
     {
         /** @var TakeDamageEntityRuleContract $rule */
         $rule = app(TakeDamageEntityRuleContract::class);
 
-        $rule($this, $damage);
+        return $rule($this, $damage);
     }
 
     public function makeDamage(): DamageValueObject
@@ -155,7 +155,7 @@ class EntityCard
         return $rule($this);
     }
 
-    public function takeRestoreHealth(RestoreHealthValueObject $restoreHealth)
+    public function takeRestoreHealth(RestoreHealthValueObject $restoreHealth): int
     {
         /** @var TakeRestoreHealthRuleContract $rule */
         $rule = app(TakeRestoreHealthRuleContract::class);
@@ -165,6 +165,7 @@ class EntityCard
 
     public function makeRestoreHealth(): RestoreHealthValueObject
     {
+        /** @var MakeRestoreHealthRuleContract $rule */
         $rule = app(MakeRestoreHealthRuleContract::class);
 
         return $rule($this);

@@ -13,7 +13,8 @@ class EntityBuilder
     {
         return new Entity(
             id: $entity->id,
-            initiative: $entity->initiative
+            initiative: $entity->initiative,
+            healthPoints: $entity->health_points
         );
     }
 
@@ -21,7 +22,8 @@ class EntityBuilder
     {
         return new Entity(
             id: $entitiesInCombat['id'],
-            initiative: $entitiesInCombat['initiative']
+            initiative: $entitiesInCombat['initiative'],
+            healthPoints: $entitiesInCombat['healthPoints']
         );
     }
 }

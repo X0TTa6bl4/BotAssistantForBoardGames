@@ -15,4 +15,8 @@ interface BattleRepositoryContract
     public function update(Battle $battle): bool;
 
     public function delete(int $id): void;
+
+    public function getByGroupId(int $groupId): Battle;
+
+    public function deleteByGroupId(int $groupId): void;
 }

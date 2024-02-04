@@ -19,6 +19,7 @@ class Battle
         $this->groupId = $groupId;
         $this->entitiesInCombat = collect($entitiesInCombat)
             ->sortByDesc(fn(Entity $entity) => $entity->getInitiative())
+            ->filter(fn(Entity $entity) => $entity->getHealthPoints() > 0)
             ->values();
 
         $this->entityIdMakeAMove = $entityIdMakeAMove ?? $this->entitiesInCombat->first()->getId();

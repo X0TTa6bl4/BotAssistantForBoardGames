@@ -8,7 +8,9 @@ class UpdateRequest
 {
     public function __construct(
         public readonly int    $id,
-        public readonly string $name
+        public readonly string $name,
+        public readonly string $state,
+        public readonly ?int   $entityIdInteraction = null
     )
     {
     }

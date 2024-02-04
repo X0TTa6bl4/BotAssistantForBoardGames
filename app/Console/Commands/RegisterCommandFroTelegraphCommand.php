@@ -42,7 +42,6 @@ class RegisterCommandFroTelegraphCommand extends Command
         $bot = TelegraphBot::query()->find(1);
 
         $bot->registerCommands([
-            'hello' => 'hello',
             'register' => 'Зарегистрироваться в боте',
             'menu' => 'Меню',
         ])->send();

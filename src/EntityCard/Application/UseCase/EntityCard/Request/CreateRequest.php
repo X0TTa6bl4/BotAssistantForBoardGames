@@ -12,7 +12,7 @@ class CreateRequest
         public readonly int    $healthPoints,
         public readonly int    $power,
         public readonly int    $initiative,
-        public readonly int    $speed,
+        public readonly int    $intelligence,
         public readonly int    $lvl,
         public readonly int    $protection,
     )

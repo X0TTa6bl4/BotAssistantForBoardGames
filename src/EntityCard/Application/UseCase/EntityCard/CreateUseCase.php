@@ -11,7 +11,7 @@ use src\EntityCard\Domain\Repository\EntityCardRepositoryContract;
 use src\EntityCard\Domain\Repository\GroupRepositoryContract;
 use src\EntityCard\Domain\Rule\IsItPossibleToCreateAnEntityRuleContract;
 
-class EntityCreateUseCase
+class CreateUseCase
 {
     public function __construct(
         private readonly EntityCardRepositoryContract             $entityCardRepository,

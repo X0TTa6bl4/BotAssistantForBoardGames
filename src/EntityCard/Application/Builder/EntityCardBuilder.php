@@ -42,7 +42,7 @@ class EntityCardBuilder
             healthPoints: new HealthPointsValueObject($request->healthPoints, $request->healthPoints),
             power: new PowerValueObject($request->power),
             initiative: new InitiativeValueObject($request->initiative),
-            intelligence: new IntelligenceValueObject($request->speed),
+            intelligence: new IntelligenceValueObject($request->intelligence),
             lvl: new LvlValueObject($request->lvl),
             protection: new ProtectionValueObject($request->protection),
         );

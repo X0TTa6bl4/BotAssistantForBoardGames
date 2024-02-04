@@ -15,7 +15,8 @@ class UserBuilder
         return new User(
             id: null,
             name: $request->name,
-            chatId: $request->chatId
+            chatId: $request->chatId,
+            menuState: 'default',
         );
     }
 
@@ -24,7 +25,9 @@ class UserBuilder
         return new User(
             id: $user->id,
             name: $user->name,
-            chatId: $user->chat_id
+            chatId: $user->chat_id,
+            menuState: $user->menu_state,
+            entityIdInteraction: $user->userEntityInteraction?->entity_id,
         );
     }
 }

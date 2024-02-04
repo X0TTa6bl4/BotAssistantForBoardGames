@@ -54,4 +54,16 @@ class BattleRepository implements BattleRepositoryContract
     {
         BattleEloquentModel::query()->find($id)->delete();
     }
+
+    public function getByGroupId(int $groupId): Battle
+    {
+        /** @var BattleEloquentModel $battleEloquentModel */
+        $battleEloquentModel = BattleEloquentModel::query()->where('group_id', $groupId)->first()?->entities();
+
+        return $this->battleBuilder->fromEloquentModel($battleEloquentModel);
+    }
+    public function deleteByGroupId(int $groupId): void
+    {
+        BattleEloquentModel::query()->where('group_id', $groupId)->delete();
+    }
 }

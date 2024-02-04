@@ -65,20 +65,23 @@ class Group
     /**
      * @throws \Exception
      */
-    public function damage(int $entityIdThatDealsDamage, int $entityIdThatTakesDamage): void
+    public function damage(int $entityIdThatDealsDamage, int $entityIdThatTakesDamage): int
     {
         $entityThatDealsDamage = $this->findEntityById($entityIdThatDealsDamage);
         $entityThatTakesDamage = $this->findEntityById($entityIdThatTakesDamage);
 
-        $entityThatTakesDamage->takeDamage($entityThatDealsDamage->makeDamage());
+        return $entityThatTakesDamage->takeDamage($entityThatDealsDamage->makeDamage());
     }
 
-    public function restoreHealth(int $entityIdThatDealsHealth, int $entityIdThatTakesHealth): void
+    /**
+     * @throws \Exception
+     */
+    public function restoreHealth(int $entityIdThatDealsHealth, int $entityIdThatTakesHealth): int
     {
         $entityThatDealsHealth = $this->findEntityById($entityIdThatDealsHealth);
         $entityThatTakesHealth = $this->findEntityById($entityIdThatTakesHealth);
 
-        $entityThatTakesHealth->takeRestoreHealth($entityThatDealsHealth->makeRestoreHealth());
+        return $entityThatTakesHealth->takeRestoreHealth($entityThatDealsHealth->makeRestoreHealth());
     }
 
     public function findUserById(int $userId): ?User
@@ -94,7 +97,7 @@ class Group
 
     private function findEntityById(int $entityId): EntityCard
     {
-        foreach ($this->users as $user) {
+        foreach ($this->getAllUsers() as $user) {
             foreach ($user->getEntities() as $entity) {
                 if ($entity->getId() === $entityId) {
                     return $entity;
@@ -115,5 +118,15 @@ class Group
         }
 
         return array_merge($entities, $this->owner->getEntities());
+    }
+
+    public function getAllUsers(): array
+    {
+        return array_merge($this->users, [$this->owner]);
+    }
+
+    public function addUser(User $user): void
+    {
+        $this->users[] = $user;
     }
 }

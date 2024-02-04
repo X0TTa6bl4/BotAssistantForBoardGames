@@ -19,13 +19,16 @@ class MakeDamageUseCase
     /**
      * @throws \Exception
      */
-    public function __invoke(MakeDamageRequest $request): Group
+    public function __invoke(MakeDamageRequest $request): int
     {
         $group = $this->groupRepository->getByUserId($request->userId);
+        if ($group === null) {
+            $group = $this->groupRepository->getByOwnerId($request->userId);
+        }
 
-        $group->damage($request->entityIdThatDealsDamage, $request->entityIdThatTakesDamage);
+        $damage = $group->damage($request->entityIdThatDealsDamage, $request->entityIdThatTakesDamage);
 
         $this->groupRepository->update($group);
-        return $group;
+        return $damage;
     }
 }

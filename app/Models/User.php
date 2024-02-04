@@ -24,6 +24,7 @@ class User extends Authenticatable
         'email',
         'password',
         'chat_id',
+        'menu_state'
     ];
 
     /**
@@ -58,5 +59,10 @@ class User extends Authenticatable
     public function entities(): HasMany
     {
         return $this->hasMany(Entity::class);
+    }
+
+    public function userEntityInteraction(): HasOne
+    {
+        return $this->hasOne(UserEntityInteraction::class);
     }
 }
