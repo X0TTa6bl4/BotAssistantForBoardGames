@@ -8,7 +8,6 @@ use DefStudio\Telegraph\Facades\Telegraph;
 use DefStudio\Telegraph\Handlers\WebhookHandler;
 use DefStudio\Telegraph\Keyboard\Button;
 use DefStudio\Telegraph\Keyboard\Keyboard;
-use DefStudio\Telegraph\Models\TelegraphChat;
 use Illuminate\Support\Facades\Log;
 use src\EntityCard\Application\UseCase\Group\CreateUseCase as EntityCreateUseCase;
 use src\EntityCard\Application\UseCase\Group\Request\CreateRequest as EntityCreateRequest;
@@ -44,24 +43,20 @@ class Handler extends WebhookHandler
 
     public function menu(): void
     {
-        Log::info('Menu', $this->message->toArray());
 
-
-        Telegraph::message('Menu')->chat(
-            TelegraphChat::query()
-                ->where('chat_id', $this->message->from()->id())
-                ->get()
-        )->keyboard(
-            Keyboard::make()->buttons([
-                Button::make('Создать мир')->action('createWorld'),
-                Button::make('Присоединиться к существующему миру')->action('joinWorld'),
-            ])
-        )->send();
+        $this->chat
+            ->message('menu')
+            ->keyboard(
+                Keyboard::make()->buttons([
+                    Button::make('Создать мир')->action('createWorld'),
+                    Button::make('Присоединиться к существующему миру')->action('joinWorld'),
+                ])
+            )->send();
     }
 
     public function joinWorld(): void
     {
-        $this->reply('Join world');
+        $this->chat->message('Напиши id мира')->send();
     }
 
     public function createWorld(): void
