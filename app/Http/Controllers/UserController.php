@@ -6,7 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use src\User\Application\UseCase\CreateUseCase;
 use src\User\Application\UseCase\DeletedUseCase;
-use src\User\Application\UseCase\FindByIdUseCase;
+use src\User\Application\UseCase\GetByIdUseCase;
 use src\User\Application\UseCase\Request\CreateRequest;
 use src\User\Application\UseCase\Request\UpdateRequest;
 use src\User\Application\UseCase\UpdateUseCase;
@@ -42,7 +42,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function findById(Request $request, FindByIdUseCase $findByIdUseCase): JsonResponse
+    public function findById(Request $request, GetByIdUseCase $findByIdUseCase): JsonResponse
     {
         $user = $findByIdUseCase($request->input('id'));
 

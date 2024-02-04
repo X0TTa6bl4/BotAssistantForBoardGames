@@ -17,7 +17,7 @@ class UpdateUseCase
 
     public function __invoke(UpdateRequest $request): void
     {
-        $user = $this->userRepository->findById($request->id);
+        $user = $this->userRepository->getById($request->id);
         $user->setName($request->name);
         $this->userRepository->update($user);
     }

@@ -52,4 +52,12 @@ class UserRepository implements UserRepositoryContract
     {
         UserEloquentModel::query()->find($id)->delete();
     }
+
+    public function getByChatId(int $chatId): User
+    {
+        /** @var UserEloquentModel $userEloquentModel */
+        $userEloquentModel = UserEloquentModel::query()->where('chat_id', $chatId)->first();
+
+        return $this->userBuilder->fromEloquentModel($userEloquentModel);
+    }
 }

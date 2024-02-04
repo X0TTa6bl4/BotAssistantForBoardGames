@@ -7,8 +7,8 @@ namespace src\EntityCard\Application\UseCase\Group\Request;
 class AddUserRequest
 {
     public function __construct(
-        public readonly int $groupId,
-        public readonly int $userId,
+        public readonly string $publicGroupId,
+        public readonly int $chatId,
     )
     {
     }

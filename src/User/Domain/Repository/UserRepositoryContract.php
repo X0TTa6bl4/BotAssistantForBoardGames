@@ -12,7 +12,9 @@ interface UserRepositoryContract
 
     public function update(User $user): bool;
 
-    public function findById(int $userId): User;
+    public function getById(int $userId): User;
+
+    public function getByChatId(int $chatId): User;
 
     public function deleted(int $userId): void;
 

@@ -116,4 +116,9 @@ class Group
 
         return array_merge($entities, $this->owner->getEntities());
     }
+
+    public function addUser(User $user): void
+    {
+        $this->users[] = $user;
+    }
 }

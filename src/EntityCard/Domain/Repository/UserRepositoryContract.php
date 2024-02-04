@@ -15,4 +15,6 @@ interface UserRepositoryContract
     public function getById(int $id): User;
 
     public function deleted(int $id): void;
+
+    public function getByChatId(int $chatId): User;
 }

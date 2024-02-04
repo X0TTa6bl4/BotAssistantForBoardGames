@@ -18,6 +18,7 @@ class TakeRestoreHealthRule implements TakeRestoreHealthRuleContract
 
         $entityCard->updateHealthPoints(
             new HealthPointsValueObject(
+                //TODO - добавить проверку на максимальное значение
                 $entityCard->getHealthPoints() + $restoreHealth,
                 $entityCard->getMaxHealthPoints()
             )

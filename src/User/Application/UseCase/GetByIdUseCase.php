@@ -7,7 +7,7 @@ namespace src\User\Application\UseCase;
 use src\User\Domain\Entity\User;
 use src\User\Domain\Repository\UserRepositoryContract;
 
-class FindByIdUseCase
+class GetByIdUseCase
 {
     public function __construct(
         private readonly UserRepositoryContract $userRepository
@@ -17,6 +17,6 @@ class FindByIdUseCase
 
     public function __invoke(int $id): User
     {
-        return $this->userRepository->findById($id);
+        return $this->userRepository->getById($id);
     }
 }

@@ -26,9 +26,11 @@ class UserRepository implements UserRepositoryContract
                 'chat_id' => $user->getChatId(),
                 'email' => Str::uuid() . '@email.com',
                 'password' => bcrypt(Str::random(10)),
+                'menu_state' => $user->getMenuState(),
             ]
         );
 
+        //TODO - проверить как регистрируется пользователь
         return $this->userBuilder->fromEloquentModel($userEloquentModel);
     }
 
@@ -56,10 +58,10 @@ class UserRepository implements UserRepositoryContract
         UserEloquentModel::query()->find($userId)->delete();
     }
 
-    public function findById(int $userId): User
+    public function getByChatId(int $chatId): User
     {
         /** @var UserEloquentModel $userEloquentModel */
-        $userEloquentModel = UserEloquentModel::query()->find($userId);
+        $userEloquentModel = UserEloquentModel::query()->where('chat_id', $chatId)->first();
 
         return $this->userBuilder->fromEloquentModel($userEloquentModel);
     }
