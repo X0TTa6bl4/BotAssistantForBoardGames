@@ -15,4 +15,6 @@ interface UserRepositoryContract
     public function findById(int $userId): User;
 
     public function deleted(int $userId): void;
+
+    public function isExistsByChatId(int $chatId): bool;
 }

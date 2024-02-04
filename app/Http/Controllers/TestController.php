@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use DefStudio\Telegraph\Keyboard\Button;
+use DefStudio\Telegraph\Keyboard\Keyboard;
+use DefStudio\Telegraph\Models\TelegraphChat;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use src\EntityCard\Domain\Repository\EntityCardRepositoryContract;
 
 class TestController extends Controller
@@ -17,20 +18,12 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        $user = User::query()->create([
-                'name' => 'test',
-                'email' => Str::uuid() . '@gmail.com',
-                'password' => bcrypt(Str::random(10)),
-            ]
-        );
-
-
-        //$group = Group::query()->with('user')->find(1);
-        //
-        //dd($group->toArray());
-
-        //
-        //dd($user->createToken('token-name', ['server:update'])->plainTextToken);
-        //Entity::factory()->create();
+        $chat = TelegraphChat::find(2);
+        $chat->keyboard(
+            Keyboard::make()->buttons([
+                Button::make('Создать мир')->action('createWorld'),
+                Button::make('Присоединиться к существующему миру')->action('joinWorld'),
+            ])
+        )->send();
     }
 }

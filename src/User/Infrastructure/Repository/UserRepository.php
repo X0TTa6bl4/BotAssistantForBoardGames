@@ -23,7 +23,8 @@ class UserRepository implements UserRepositoryContract
         /** @var UserEloquentModel $userEloquentModel */
         $userEloquentModel = UserEloquentModel::query()->create([
                 'name' => $user->getName(),
-                'email' => Str::uuid() . '@gmail.com',
+                'chat_id' => $user->getChatId(),
+                'email' => Str::uuid() . '@email.com',
                 'password' => bcrypt(Str::random(10)),
             ]
         );
@@ -53,5 +54,18 @@ class UserRepository implements UserRepositoryContract
     public function deleted(int $userId): void
     {
         UserEloquentModel::query()->find($userId)->delete();
+    }
+
+    public function findById(int $userId): User
+    {
+        /** @var UserEloquentModel $userEloquentModel */
+        $userEloquentModel = UserEloquentModel::query()->find($userId);
+
+        return $this->userBuilder->fromEloquentModel($userEloquentModel);
+    }
+
+    public function isExistsByChatId(int $chatId): bool
+    {
+        return UserEloquentModel::query()->where('chat_id', $chatId)->exists();
     }
 }

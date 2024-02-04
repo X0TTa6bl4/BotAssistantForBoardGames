@@ -20,6 +20,9 @@ class CreateUseCase
 
     public function __invoke(CreateRequest $request): User
     {
+        if($this->userRepository->isExistsByChatId($request->chatId)) {
+            throw new \Exception('User already exists');
+        }
         return $this->userRepository->create(
             $this->userBuilder->fromCreate($request)
         );

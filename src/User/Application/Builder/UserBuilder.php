@@ -14,7 +14,8 @@ class UserBuilder
     {
         return new User(
             id: null,
-            name: $request->name
+            name: $request->name,
+            chatId: $request->chatId
         );
     }
 
@@ -23,6 +24,7 @@ class UserBuilder
         return new User(
             id: $user->id,
             name: $user->name,
+            chatId: $user->chat_id
         );
     }
 }

@@ -13,13 +13,17 @@ class CreateUseCase
 {
     public function __construct(
         private readonly GroupRepositoryContract $groupRepository,
-        private readonly GroupBuilder $groupBuilder
+        private readonly GroupBuilder            $groupBuilder
     )
     {
     }
 
     public function __invoke(CreateRequest $request): Group
     {
+        $group = $this->groupRepository->getByOwnerId($request->ownerId);
+        if ($group !== null) {
+            return $group;
+        }
         return $this->groupRepository->create(
             $this->groupBuilder->fromCreate($request)
         );
