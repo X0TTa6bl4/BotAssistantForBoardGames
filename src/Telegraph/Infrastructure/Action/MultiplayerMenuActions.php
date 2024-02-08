@@ -37,7 +37,7 @@ trait MultiplayerMenuActions
                 state: $user->getMenuState()
             )
         );
-        $this->chat->message("Мир создан, <code>{$group->getPublicId()}</code>>")->send();
+        $this->chat->message("Мир создан, <code>{$group->getPublicId()}</code>")->send();
         $this->currentMenu();
     }
 

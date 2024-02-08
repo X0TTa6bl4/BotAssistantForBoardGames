@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace src\EntityCard\Infrastructure\Repository;
 
+use App\Models\Entity;
 use App\Models\Group as GroupEloquentModel;
 use src\EntityCard\Application\Builder\GroupBuilder;
+use src\EntityCard\Domain\Entity\EntityCard;
 use src\EntityCard\Domain\Entity\Group;
 use src\EntityCard\Domain\Repository\EntityCardRepositoryContract;
 use src\EntityCard\Domain\Repository\GroupRepositoryContract;
@@ -42,8 +44,13 @@ class GroupRepository implements GroupRepositoryContract
 
         $entities = [];
         foreach ($group->getAllUsers() as $user) {
+            /** @var EntityCard $entity */
             foreach ($user->getEntities() as $entity) {
-                $entities[] = $entity;
+                if ($entity->getHealthPoints() !== 0) {
+                    $entities[] = $entity;
+                } else {
+                    Entity::query()->find($entity->getId())->delete();
+                }
             }
         }
 

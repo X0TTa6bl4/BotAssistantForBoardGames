@@ -30,6 +30,6 @@ trait RegisterActions
             $this->currentMenu();
             return;
         }
-        $this->currentMenu();
+        $this->menu();
     }
 }

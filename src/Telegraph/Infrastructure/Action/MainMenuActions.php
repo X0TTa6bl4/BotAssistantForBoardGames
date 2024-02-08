@@ -114,7 +114,7 @@ trait MainMenuActions
 
     public function help(): void
     {
-        $this->chat->message("test \nsuccess")->send();
+        $this->chat->message("Помоги себе сам")->send();
         $this->currentMenu();
     }
 

@@ -71,9 +71,13 @@ class Handler extends WebhookHandler
 
         $menu = $this->getMenu($user->getMenuState());
         $handler = app($menu->getHandler());
-        $handler($text, $user);
+        try {
+            $handler($text, $user);
+        } catch (\Exception $e) {
+            $this->reply($e->getMessage());
+        }
 
-        $this->currentMenu();
+        $this->menu();
     }
 
     protected function getChatId(): int
