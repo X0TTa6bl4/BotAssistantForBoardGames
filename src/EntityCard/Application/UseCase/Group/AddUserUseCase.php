@@ -21,6 +21,9 @@ class AddUserUseCase
     {
         $user = $this->userRepository->getByChatId($request->chatId);
         $group = $this->groupRepository->getByPublicId($request->publicGroupId);
+        if ($group === null) {
+            throw new \Exception('Group not found');
+        }
         $group->addUser($user);
         $this->groupRepository->update($group);
     }

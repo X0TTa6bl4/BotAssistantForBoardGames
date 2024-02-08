@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace src\User\Infrastructure\Repository;
 
 use App\Models\User as UserEloquentModel;
+use App\Models\UserEntityInteraction;
 use Illuminate\Support\Str;
 use src\User\Application\Builder\UserBuilder;
 use src\User\Domain\Entity\User;
@@ -40,7 +41,17 @@ class UserRepository implements UserRepositoryContract
             ->find($user->getId())
             ->update([
                 'name' => $user->getName(),
+                'menu_state' => $user->getMenuState()
             ]);
+
+        if($user->getEntityIdInteraction() === null){
+            UserEntityInteraction::query()->where('user_id', $user->getId())->delete();
+        } else {
+            UserEntityInteraction::query()->updateOrCreate(
+                ['user_id' => $user->getId()],
+                ['entity_id' => $user->getEntityIdInteraction()]
+            );
+        }
 
         return $userEloquentModel;
     }
@@ -48,7 +59,7 @@ class UserRepository implements UserRepositoryContract
     public function getById(int $userId): User
     {
         /** @var UserEloquentModel $userEloquentModel */
-        $userEloquentModel = UserEloquentModel::query()->find($userId);
+        $userEloquentModel = UserEloquentModel::query()->with('userEntityInteraction')->find($userId);
 
         return $this->userBuilder->fromEloquentModel($userEloquentModel);
     }

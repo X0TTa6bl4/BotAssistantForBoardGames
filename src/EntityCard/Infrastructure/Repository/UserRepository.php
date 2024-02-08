@@ -13,22 +13,9 @@ use src\EntityCard\Domain\Repository\UserRepositoryContract;
 class UserRepository implements UserRepositoryContract
 {
     public function __construct(
-        private UserBuilder $userBuilder
+        private readonly UserBuilder $userBuilder
     )
     {
-    }
-
-    public function create(User $user): User
-    {
-        /** @var UserEloquentModel $userEloquentModel */
-        $userEloquentModel = UserEloquentModel::query()->create([
-                'name' => $user->getName(),
-                'email' => Str::uuid() . '@gmail.com',
-                'password' => bcrypt(Str::random(10)),
-            ]
-        );
-
-        return $this->userBuilder->fromEloquentModel($userEloquentModel);
     }
 
     public function update(User $user): bool

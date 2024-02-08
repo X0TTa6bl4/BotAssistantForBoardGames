@@ -10,13 +10,20 @@ class User
     private string $name;
     private int $chatId;
     private string $menuState;
+    private ?int $entityIdInteraction;
 
-    public function __construct(?int $id, string $name, int $chatId, string $menuState)
+    public function __construct(
+        ?int   $id,
+        string $name,
+        int    $chatId,
+        string $menuState,
+        ?int   $entityIdInteraction = null)
     {
         $this->id = $id;
         $this->name = $name;
         $this->chatId = $chatId;
         $this->menuState = $menuState;
+        $this->entityIdInteraction = $entityIdInteraction;
     }
 
     public function getId(): ?int
@@ -39,8 +46,26 @@ class User
         return $this->menuState;
     }
 
-    public function setName(string $name): void
+    public function getEntityIdInteraction(): ?int
+    {
+        return $this->entityIdInteraction;
+    }
+
+    public function setName(string $name): User
     {
         $this->name = $name;
+        return $this;
+    }
+
+    public function setMenuState(string $menuState): User
+    {
+        $this->menuState = $menuState;
+        return $this;
+    }
+
+    public function setEntityIdInteraction(?int $entityIdInteraction): User
+    {
+        $this->entityIdInteraction = $entityIdInteraction;
+        return $this;
     }
 }

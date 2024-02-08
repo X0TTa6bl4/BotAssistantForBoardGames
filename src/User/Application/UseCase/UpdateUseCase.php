@@ -18,7 +18,7 @@ class UpdateUseCase
     public function __invoke(UpdateRequest $request): void
     {
         $user = $this->userRepository->getById($request->id);
-        $user->setName($request->name);
+        $user->setName($request->name)->setMenuState($request->state)->setEntityIdInteraction($request->entityIdInteraction);
         $this->userRepository->update($user);
     }
 }

@@ -9,5 +9,5 @@ use src\EntityCard\Domain\Entity\ValueObject\RestoreHealthValueObject;
 
 interface TakeRestoreHealthRuleContract
 {
-    public function __invoke(EntityCard $entityCard, RestoreHealthValueObject $restoreHealth): void;
+    public function __invoke(EntityCard $entityCard, RestoreHealthValueObject $restoreHealth): int;
 }

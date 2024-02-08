@@ -22,7 +22,7 @@ return [
      * For reference, see https://defstudio.github.io/telegraph/webhooks/overview
      */
     //'webhook_handler' => DefStudio\Telegraph\Handlers\EmptyWebhookHandler::class,
-    'webhook_handler' => \src\Telegraph\Handler::class,
+    'webhook_handler' => \src\Telegraph\Infrastructure\Handler::class,
 
     /*
      * Sets the webhook URL that will be exposed by the server,

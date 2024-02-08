@@ -8,8 +8,6 @@ use src\EntityCard\Domain\Entity\User;
 
 interface UserRepositoryContract
 {
-    public function create(User $user): User;
-
     public function update(User $user): bool;
 
     public function getById(int $id): User;

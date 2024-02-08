@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace src\Battle\Application\Builder;
 
 use App\Models\Battle as BattleEloquentModel;
-use src\Battle\Application\UseCase\Request\CreateRequest;
 use src\Battle\Domain\Entity\Battle;
 
 class BattleBuilder
@@ -30,13 +29,13 @@ class BattleBuilder
         );
     }
 
-    public function fromCreate(CreateRequest $request): Battle
+    public function fromCreate(int $groupId, array $entity): Battle
     {
         return new Battle(
             id: null,
-            groupId: $request->groupId,
+            groupId: $groupId,
             entitiesInCombat: array_map(fn($entity) => $this->entityBuilder->fromCreate($entity),
-                $request->entitiesInCombat)
+                $entity)
         );
     }
 }

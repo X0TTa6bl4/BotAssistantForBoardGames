@@ -16,7 +16,7 @@ class UserBuilder
             id: null,
             name: $request->name,
             chatId: $request->chatId,
-            menuState: 'mainMenu',
+            menuState: 'default',
         );
     }
 
@@ -27,6 +27,7 @@ class UserBuilder
             name: $user->name,
             chatId: $user->chat_id,
             menuState: $user->menu_state,
+            entityIdInteraction: $user->userEntityInteraction?->entity_id,
         );
     }
 }

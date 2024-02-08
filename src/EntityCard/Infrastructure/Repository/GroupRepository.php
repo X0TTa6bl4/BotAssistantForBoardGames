@@ -41,7 +41,7 @@ class GroupRepository implements GroupRepositoryContract
         ]);
 
         $entities = [];
-        foreach ($group->getUsers() as $user) {
+        foreach ($group->getAllUsers() as $user) {
             foreach ($user->getEntities() as $entity) {
                 $entities[] = $entity;
             }
